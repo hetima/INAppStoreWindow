@@ -45,6 +45,7 @@
     BOOL _centerTrafficLightButtons;
     CGFloat _cachedTitleBarHeight;
 	CGFloat _trafficLightButtonsLeftMargin;
+	CGFloat _trafficLightButtonsTopMargin;
 	CGFloat _fullScreenButtonRightMargin;
     BOOL _setFullScreenButtonRightMargin;
 }
@@ -58,8 +59,9 @@
 @property (nonatomic) BOOL hideTitleBarInFullScreen;
 /** Use this API to hide the baseline INAppStoreWindow draws between itself and the main window contents. */
 @property (nonatomic) BOOL showsBaselineSeparator;
-/** Adjust the left and right padding of the trafficlight and fullscreen buttons */
+/** Adjust the left,top and right padding of the trafficlight and fullscreen buttons */
 @property (nonatomic) CGFloat trafficLightButtonsLeftMargin;
+@property (nonatomic) CGFloat trafficLightButtonsTopMargin;
 @property (nonatomic) CGFloat fullScreenButtonRightMargin;
 
 @end

@@ -17,6 +17,7 @@
 @synthesize centerTrafficLight = _centerTrafficLight;
 @synthesize fullScreenRightMarginSlider = _fullScreenRightMarginSlider;
 @synthesize trafficLightLeftMargin = _trafficLightLeftMargin;
+@synthesize trafficLightTopMargin = _trafficLightTopMargin;
 @synthesize showsBaselineSeparator = _showsBaselineSeparator;
 @synthesize windowControllers = _windowControllers;
 
@@ -25,6 +26,7 @@
     self.windowControllers = [NSMutableArray array];
     // The class of the window has been set in INAppStoreWindow in Interface Builder
     self.window.trafficLightButtonsLeftMargin = 7.0;
+    self.window.trafficLightButtonsTopMargin = 0.0;
     self.window.fullScreenButtonRightMargin = 7.0; 
     self.window.hideTitleBarInFullScreen = YES;    
     self.window.centerFullScreenButton = YES;    
@@ -36,6 +38,7 @@
     self.showsBaselineSeparator.state = self.window.showsBaselineSeparator;
     self.fullScreenRightMarginSlider.doubleValue = self.window.fullScreenButtonRightMargin;
     self.trafficLightLeftMargin.doubleValue = self.window.trafficLightButtonsLeftMargin;
+    self.trafficLightTopMargin.doubleValue = self.window.trafficLightButtonsTopMargin;
 }
 
 // window delegate to correct the position of the sheet
@@ -80,6 +83,8 @@
 {
     if ( [sender isEqual:self.fullScreenRightMarginSlider] ) {
         self.window.fullScreenButtonRightMargin = [sender doubleValue];
+    } else if ( [sender isEqual:self.trafficLightTopMargin] ) {
+        self.window.trafficLightButtonsTopMargin = [sender doubleValue];
     } else {
         self.window.trafficLightButtonsLeftMargin = [sender doubleValue];
     }    

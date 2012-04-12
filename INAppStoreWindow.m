@@ -342,6 +342,22 @@ static CGImageRef createNoiseImageRef(NSUInteger width, NSUInteger height, CGFlo
     return _trafficLightButtonsLeftMargin;
 }
 
+- (void)setTrafficLightButtonsTopMargin:(CGFloat)newTrafficLightButtonsTopMargin
+{
+	if (_trafficLightButtonsTopMargin != newTrafficLightButtonsTopMargin) {
+		_trafficLightButtonsTopMargin = newTrafficLightButtonsTopMargin;
+		[self _recalculateFrameForTitleBarView];
+		[self _layoutTrafficLightsAndContent];
+		[self _displayWindowAndTitlebar];
+        [self _setupTrafficLightsTrackingArea];
+	}
+}
+
+- (CGFloat)trafficLightButtonsTopMargin
+{
+    return _trafficLightButtonsTopMargin;
+}
+
 
 - (void)setFullScreenButtonRightMargin:(CGFloat)newFullScreenButtonRightMargin
 {
@@ -384,6 +400,7 @@ static CGImageRef createNoiseImageRef(NSUInteger width, NSUInteger height, CGFlo
     _centerTrafficLightButtons = YES;
     _titleBarHeight = [self _minimumTitlebarHeight];
 	_trafficLightButtonsLeftMargin = [self _defaultTrafficLightLeftMargin];
+	_trafficLightButtonsTopMargin = 0.0;
     [self setMovableByWindowBackground:YES];
     
     /** -----------------------------------------
@@ -424,6 +441,8 @@ static CGImageRef createNoiseImageRef(NSUInteger width, NSUInteger height, CGFlo
     CGFloat buttonOrigin = 0.0;
     if ( self.centerTrafficLightButtons ) {
         buttonOrigin = round(NSMidY(titleBarFrame) - INMidHeight(closeFrame));
+    } else if ( _trafficLightButtonsTopMargin > 0.0 ) {
+        buttonOrigin = NSMaxY(titleBarFrame) - NSHeight(closeFrame) - _trafficLightButtonsTopMargin;
     } else {
         buttonOrigin = NSMaxY(titleBarFrame) - NSHeight(closeFrame) - INButtonTopOffset;
     }
