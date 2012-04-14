@@ -271,6 +271,67 @@ static CGImageRef createNoiseImageRef(NSUInteger width, NSUInteger height, CGFlo
 #pragma mark -
 #pragma mark Accessors
 
+
+- (void)setSuffixView:(NSView *)newView
+{
+
+    CGFloat diffY=0;
+    
+    //do nothing when hidden in fullscreen
+    if (_titleBarHeight<=0) {
+        return;
+    }
+    
+    if ((_suffixView != newView) && newView) {
+        diffY = _suffixView.frame.size.height;
+        [_suffixView removeFromSuperview];
+#if __has_feature(objc_arc)
+        _suffixView = newView;
+#else
+        [_suffixView release];
+        _suffixView = [newView retain];
+#endif
+        [_suffixView setAutoresizingMask:(NSViewMaxYMargin | NSViewWidthSizable)];
+        diffY = newView.frame.size.height - diffY;
+        
+        [[self titleBarView]addSubview:newView];
+        [_suffixView setFrameOrigin:NSZeroPoint];
+    }else if (!newView && _suffixView) {
+        if ([_suffixView superview]==[self titleBarView]) {
+            diffY-=_suffixView.frame.size.height;
+            [_suffixView removeFromSuperview];
+        }
+#if __has_feature(objc_arc)
+        _suffixView = nil;
+#else
+        [_suffixView release];
+        _suffixView = nil;
+#endif
+    }
+    if (diffY != 0.0) {
+        //not smart
+        if ([_titleBarView isHidden]) {
+            [self setTitleBarHeight:[self titleBarHeight]+diffY];
+        } else {
+            NSRect oldFrm=[_titleBarView frame];
+            [NSAnimationContext beginGrouping];
+            [[NSAnimationContext currentContext] setDuration:0.1];
+
+            [self setTitleBarHeight:[self titleBarHeight]+diffY];
+            
+            NSRect frm=[_titleBarView frame];
+            [_titleBarView setFrame:oldFrm];
+            [[_titleBarView animator] setFrame:frm];
+            [NSAnimationContext endGrouping];
+        }
+    }
+}
+
+- (NSView *)suffixView
+{
+    return _suffixView;
+}
+
 - (void)setTitleBarView:(NSView *)newTitleBarView
 {
     if ((_titleBarView != newTitleBarView) && newTitleBarView) {

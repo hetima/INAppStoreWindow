@@ -38,6 +38,7 @@
 @interface INAppStoreWindow : NSWindow {
     CGFloat _titleBarHeight;
     NSView *_titleBarView;
+    NSView *_suffixView;
 	NSString *_windowMenuTitle;
     BOOL _centerFullScreenButton;
     BOOL _hideTitleBarInFullScreen;
@@ -53,6 +54,7 @@
 @property (nonatomic) CGFloat titleBarHeight;
 /** The title bar view itself. Add subviews to this view that you want to show in the title bar (e.g. buttons, a toolbar, etc.). This view can also be set if you want to use a different styled title bar aside from the default one (textured, etc.). **/
 @property (INAppStoreWindowRetain) NSView *titleBarView;
+@property (INAppStoreWindowRetain) NSView *suffixView;
 @property (nonatomic) BOOL centerFullScreenButton;
 @property (nonatomic) BOOL centerTrafficLightButtons;
 /** If you want to hide the title bar in fullscreen mode, set this boolean to YES **/

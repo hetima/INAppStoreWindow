@@ -17,7 +17,9 @@
     NSSlider *_fullScreenRightMarginSlider;
     NSSlider *_trafficLightLeftMargin;
     NSButton *_showsBaselineSeparator;
-    NSMutableArray *_windowControllers;    
+    NSMutableArray *_windowControllers;
+    
+    NSView *_suffixView;
 }
 
 @property (assign) IBOutlet NSPanel *sheet;
@@ -29,6 +31,9 @@
 @property (assign) IBOutlet NSSlider *trafficLightTopMargin;
 @property (assign) IBOutlet NSButton *showsBaselineSeparator;
 @property (nonatomic, retain) NSMutableArray *windowControllers;
+
+@property (assign) IBOutlet NSView *suffixView;
+
 
 - (IBAction)createWindowController:(id)sender;
 - (IBAction)checkboxAction:(id)sender;

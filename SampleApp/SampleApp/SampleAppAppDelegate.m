@@ -20,6 +20,7 @@
 @synthesize trafficLightTopMargin = _trafficLightTopMargin;
 @synthesize showsBaselineSeparator = _showsBaselineSeparator;
 @synthesize windowControllers = _windowControllers;
+@synthesize suffixView = _suffixView;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
@@ -31,6 +32,8 @@
     self.window.hideTitleBarInFullScreen = YES;    
     self.window.centerFullScreenButton = YES;    
     self.window.titleBarHeight = 40.0;
+    self.window.hideTitleBarInFullScreen=NO;
+    self.window.suffixView=self.suffixView;
     
     // set checkboxes
     self.centerFullScreen.state = self.window.centerFullScreenButton;
@@ -39,6 +42,7 @@
     self.fullScreenRightMarginSlider.doubleValue = self.window.fullScreenButtonRightMargin;
     self.trafficLightLeftMargin.doubleValue = self.window.trafficLightButtonsLeftMargin;
     self.trafficLightTopMargin.doubleValue = self.window.trafficLightButtonsTopMargin;
+    
 }
 
 // window delegate to correct the position of the sheet
@@ -88,6 +92,12 @@
     } else {
         self.window.trafficLightButtonsLeftMargin = [sender doubleValue];
     }    
+}
+
+- (IBAction)suffixViewAction:(id)sender
+{
+    NSView* view = (self.window.suffixView ? nil : self.suffixView);
+    [self.window setSuffixView:view];
 }
 
 - (void)dealloc
